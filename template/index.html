@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <ul>产品列表
+        {% for product in products %}
+            <li>{{ product.name }} - {{ product.pid }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+</body>
+</html>
