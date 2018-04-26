@@ -1,0 +1,63 @@
+a {
+    color: #21ba45;
+}
+.ui.inverted.basic.segment.banner {
+    height: 320px;
+    background: url("../images/banner.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.ui.inverted.center.aligned.header.slogan {
+    font-size: 40px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ui.tiny.image.avatar {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ui.items.products > .item {
+    padding: 10px;
+    cursor: pointer;
+}
+.ui.items.products > .item:hover {
+    background: #efefef;
+}
+.ui.items.products > .item > .content {
+    position: relative;
+}
+
+.upvote-link {
+    position: relative;
+    width: 40px;
+    height: 45px;
+    margin-right: 30px;
+    border-radius: 2px;
+    background: #fff;
+    border: 1px solid #21ba45;
+    padding: 5px;
+}
+.upvote-link > i {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+.upvote-link > span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, 0);
+}
+.upvote-link:hover {
+    background: #21ba45;
+    color: #fff;
+}

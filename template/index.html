@@ -3,15 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/static/semantic/semantic.css">
+    <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
 
-<div>
-    <ul>产品列表
-        {% for product in products %}
-            <li>{{ product.name }} - {{ product.pid }}</li>
+<div class="ui inverted basic segment banner">
+    <div class="ui inverted text menu">
+
+        <div class="item"><h2 class="ui inverted header">品位</h2></div>
+
+        <div class="menu right">
+            <div class="item">
+                <button type="button" class="ui inverted circular button">
+                    <i class="icon github alternate"></i>
+                    登录
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <h1 class="ui inverted center aligned header slogan">
+        有味道的产品
+        <p class="ui sub header">不错过任何一个新产品</p>
+        <button class="ui large green circular button"><i class="icon plus"></i> 分享产品</button>
+    </h1>
+
+</div>
+
+
+<div class="ui basic segment content">
+    <h1 class="ui center aligned header">产品列表</h1>
+
+    <div class="ui centered grid container">
+        <div class="ten wide column">
+
+        {% for dt, items in products_dict.items %}
+
+            <span>{{ dt }}</span>
+            <div class="ui divider"></div>
+
+            <div class="ui items products">
+                {% if items|length > 0 %}
+                    {% for product in items %}
+                    <div class="item">
+                        <a href="javascript:void(0);" class="upvote-link">
+                            <i class="icon thumbs up outline"></i>
+                            <span class="vote-count">{{ product.vote_count }}</span>
+                        </a>
+                        <div class="content">
+                            <div class="header">{{ product.name }}</div>
+                            <div class="description">{{ product.digest }}</div>
+                            <div class="ui tiny image avatar">
+                                <img src="{{ product.user.avatar }}" alt="{{ product.user.nickname }}">
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>没有任何产品~~</p>
+                {% endif %}
+            </div>
+
         {% endfor %}
-    </ul>
+
+        </div>
+    </div>
+
 </div>
 
 </body>
