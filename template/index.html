@@ -39,9 +39,10 @@
     <div class="ui centered grid container">
         <div class="ten wide column">
 
+        <div id="products-wrapper">
         {% for dt, items in products_dict.items %}
 
-            <span>{{ dt }}</span>
+            <span class="date">{{ dt }}</span>
             <div class="ui divider"></div>
 
             <div class="ui items products">
@@ -67,11 +68,54 @@
             </div>
 
         {% endfor %}
+        </div>
+
+        <button id="load-btn" type="button" class="ui green circular button load-more">加载更多</button>
 
         </div>
     </div>
 
 </div>
+
+
+<script>
+    (function() {
+        var httpRequest;
+        document.getElementById("load-btn").addEventListener("click", makeRequest);
+
+        function makeRequest() {
+            var dateNodes = document.getElementsByClassName("date");
+            var lastDateNode = dateNodes[dateNodes.length - 1];
+            var lastDate = lastDateNode.innerText;
+            console.log(lastDate);
+
+            if (window.XMLHttpRequest) {
+                httpRequest = new XMLHttpRequest();
+            } else if (window.ActiveXObject) {
+                httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+            } else {
+                alert("Can't create an XMLHTTP instance");
+                return false;
+            }
+
+            httpRequest.onreadystatechange = renderProduct;
+            httpRequest.open("GET", "/?last_dt=" + lastDate);
+            httpRequest.send();
+        }
+
+        function renderProduct() {
+            if (httpRequest.readyState  === XMLHttpRequest.DONE) {
+                if (httpRequest.status === 200) {
+                    var currentNode = document.createRange().createContextualFragment(httpRequest.responseText);
+                    document.getElementById("products-wrapper").appendChild(currentNode);
+                } else {
+                    alert("error");
+                }
+            }
+        }
+
+    })();
+</script>
 
 </body>
 </html>

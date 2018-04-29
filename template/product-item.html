@@ -1,0 +1,24 @@
+<span class="date">{{ date }}</span>
+<div class="ui divider"></div>
+
+<div class="ui items products">
+    {% if products|length > 0 %}
+        {% for product in products %}
+        <div class="item">
+            <a href="javascript:void(0);" class="upvote-link">
+                <i class="icon thumbs up outline"></i>
+                <span class="vote-count">{{ product.vote_count }}</span>
+            </a>
+            <div class="content">
+                <div class="header">{{ product.name }}</div>
+                <div class="description">{{ product.digest }}</div>
+                <div class="ui tiny image avatar">
+                    <img src="{{ product.user.avatar }}" alt="{{ product.user.nickname }}">
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>没有任何产品~~</p>
+    {% endif %}
+</div>

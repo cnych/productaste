@@ -61,3 +61,11 @@ a {
     background: #21ba45;
     color: #fff;
 }
+
+.ui.green.circular.button.load-more {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top:  50px;
+    margin-bottom: 50px;
+}
