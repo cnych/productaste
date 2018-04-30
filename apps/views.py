@@ -29,4 +29,4 @@ def index_view(request):
             'products': Product.objects.filter(public=True, created_at__contains=_key).
                 order_by('-vote_count', '-created_at')
         }
-        return render(request, 'product-item.html', context)
+        return render(request, 'components/products.tpl.html', context)
