@@ -24,7 +24,7 @@ SECRET_KEY = '5=a=*8n*ke6#!*@%)qg(3g@j^vdd7o$_w4$if%a1@+hxl02zeo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -130,3 +130,12 @@ STATICFILES_DIRS = (
 
 # other settings
 DEFAULT_AVATAR_URL = 'http://sdn.haimaxy.com/icon/haimaxy-wx-logo.png'
+
+# 用于用户认证的信息
+AUTH = {
+    'github': {
+        'client_id': '3e101163c53709f8ecb2',
+        'client_secret': '35b346eaef3b7998b1e7d1f352e055b9a535ef02'
+    }
+}
+

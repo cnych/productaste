@@ -1,0 +1,1 @@
+docker run --name mynginx -d -p 80:80 mynginx:v1

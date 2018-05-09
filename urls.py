@@ -17,8 +17,14 @@ from django.contrib import admin
 from django.urls import path
 
 from apps.views import index_view
+from apps.account.views import login_view, auth_github_view, auth_github_callback_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index_view, name='home'),
+    path('', index_view, name='index'),
+
+    path('login/', login_view, name='login'),
+    path('auth/github/', auth_github_view, name='auth_github'),
+    path('auth/github/callback/', auth_github_callback_view, name='auth_github_callback',)
+
 ]
