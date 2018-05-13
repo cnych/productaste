@@ -1,3 +1,5 @@
+import time
+
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
@@ -26,6 +28,17 @@ class Product(models.Model):
 
     def __str__(self):
         return '%s(%s)' % (self.name, self.pid)
+    
+    def vote(self, user):
+        """用户user点赞当前产品"""
+        if not ProductVote.voted(user, self):
+            pvote = ProductVote()
+            pvote.user = user
+            pvote.product = self
+            pvote.add_time = int(time.time())
+            pvote.save()
+            self.vote_count += 1
+            self.save(update_fields=['vote_count'])
 
 
 class ProductVote(models.Model):
@@ -37,6 +50,10 @@ class ProductVote(models.Model):
         db_table = 'product_vote'
         verbose_name = '产品点赞'
         verbose_name_plural = '产品点赞'
+    
+    @classmethod
+    def voted(cls, user, product):
+        return cls.objects.filter(user=user, product=product).exists()
 
 
 @receiver(post_save, sender=Product, dispatch_uid='gen_product_pid')

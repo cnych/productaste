@@ -5,7 +5,7 @@
     {% if products|length > 0 %}
         {% for product in products %}
         <div class="item">
-            <a href="javascript:void(0);" class="upvote-link">
+            <a href="javascript:void(0);" data-id="{{ product.pid }}" class="upvote-link">
                 <i class="icon thumbs up outline"></i>
                 <span class="vote-count">{{ product.vote_count }}</span>
             </a>
