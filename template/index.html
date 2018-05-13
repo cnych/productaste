@@ -16,14 +16,25 @@
         <div class="menu right">
             <div class="item">
                 {% if request.user.is_authenticated %}
-                    <div class="ui images">
-                        <img width="50" src="{{ request.user.avatar }}" alt="">
+
+                    <div class="ui inline dropdown">
+                        <div class="text">
+                            <img src="{{ request.user.avatar }}" alt="" class="ui avatar image">
+                             {{ request.user.nickname }}
+                        </div>
+
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="/logout/" class="item">注销</a>
+                        </div>
+
                     </div>
+
                 {% else %}
-                    <button type="button" class="ui inverted circular button">
+                    <a  href="/auth/github/" class="ui inverted circular button">
                         <i class="icon github alternate"></i>
                         登录
-                    </button>
+                    </a>
                 {% endif %}
             </div>
         </div>
@@ -33,7 +44,7 @@
     <h1 class="ui inverted center aligned header slogan">
         有味道的产品
         <p class="ui sub header">不错过任何一个新产品</p>
-        <button class="ui large green circular button"><i class="icon plus"></i> 分享产品</button>
+        <button class="ui large green circular button btn-share"><i class="icon plus"></i> 分享产品</button>
     </h1>
 
 </div>
@@ -61,9 +72,48 @@
 </div>
 
 
+<div class="ui mini modal share">
+  <div class="header">分享新产品</div>
+  <div class="content">
+        <form action="/product/new/" class="ui form" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="field">
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <div class="actions">
+                <div class="ui black deny button">取消</div>
+                <button type="submit" class="ui submit green right labeled icon button btn-submit">
+                    提交
+                    <i class="checkmark icon"></i>
+                </button>
+            </div>
+        </form>
+
+  </div>
+</div>
+
+
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/static/semantic/semantic.js"></script>
 <script>
     $(function() {
+
+        $(".ui.inline.dropdown").dropdown();
+
+        $(".btn-share").bind("click", function(e) {
+            {% if request.user.is_authenticated %}
+                $(".ui.mini.modal.share").modal("show");
+
+            {% else %}
+                window.location.href = '/auth/github/';
+
+            {% endif %}
+
+        });
+
         $("#load-btn").bind("click", function(e) {
             var lastDate = $("#products-wrapper .date").last().text();
 

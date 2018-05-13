@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.shortcuts import render
 
 from apps.product.models import Product
+from apps.product.form import ProductForm
 
 from utils.time_utils import date, str2date
 
@@ -18,7 +19,8 @@ def index_view(request):
                 public=True, created_at__contains=_key).\
                 order_by('-vote_count', '-created_at')
         context = {
-            'products_dict': products_dict
+            'products_dict': products_dict,
+            'form': ProductForm
         }
         return render(request, 'index.html', context)
     else:  # 渲染前一天的数据

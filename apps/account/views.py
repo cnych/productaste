@@ -4,7 +4,7 @@ import requests
 
 from django.shortcuts import render
 from django.conf import settings
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.urls import reverse
 
@@ -29,6 +29,12 @@ def login_view(request):
                 return HttpResponseRedirect(reverse('index'))
 
     return HttpResponse('<h1>Login Failed</h1>')
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
+
 
 
 def auth_github_view(request):
