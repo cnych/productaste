@@ -57,9 +57,13 @@ a {
     top: 50%;
     transform: translate(-50%, 0);
 }
-.upvote-link:hover, .active {
+.upvote-link:hover, .upvote-active {
     background: #21ba45;
     color: #fff;
+}
+.upvote-active {
+    pointer-events: none;
+    cursor: default;
 }
 
 .ui.green.circular.button.load-more {

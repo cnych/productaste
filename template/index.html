@@ -121,7 +121,6 @@
                 type: "GET",
                 url: "/?last_dt=" + lastDate,
                 success: function (response) {
-                    console.log(response);
                     $("#products-wrapper").append(response);
                 },
                 error: function (err) {
@@ -131,7 +130,7 @@
 
         });
 
-        $(".upvote-link").bind("click", function(e) {
+        $(document).on("click", ".upvote-link", function(e){
             var self = $(this);
             $.ajax({
                 type: "POST",
@@ -147,7 +146,9 @@
                     if (errcode === 200) {
                         var $vote = self.find(".vote-count");
                         $vote.text(data.vote_count);
-                        self.addClass("active");
+                        self.addClass("upvote-active");
+                    } else if (errcode === 401) {
+                        window.location.href = '/auth/github/';
                     } else {
                         alert(message);
                     }
