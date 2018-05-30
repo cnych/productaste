@@ -1,0 +1,16 @@
+workspace:
+  base: /src/
+  path: .
+
+pipeline:
+  docker:
+    image: plugins/docker
+    repo: cnych/productaste
+    context: deploy/${DRONE_BRANCH}
+    dockerfile: deploy/${DRONE_BRANCH}/Dockerfile
+    registry: docker.io
+    secrets: [ docker_username, docker_password ]
+    tags: ${DRONE_TAG}
+    when:
+      branch: [master]
+  # deploy:
