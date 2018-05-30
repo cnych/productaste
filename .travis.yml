@@ -4,27 +4,27 @@ services:
   - docker
 
 env:
-  - OWNER=cnych
-  - IMAGE_NAME=productaste
-  - QNAME=${OWNER}/${IMAGE_NAME}
-  - IMAGE_VERSION=v1.${TRAVIS_BUILD_NUMBER}
-  - BUILD_TAG=${QNAME}:${IMAGE_VERSION}
-  - LATEST_TAG=${QNAME}:latest
+  OWNER: cnych
+  IMAGE_NAME: productaste
+  QNAME: ${OWNER}/${IMAGE_NAME}
+  IMAGE_VERSION: v1.${TRAVIS_BUILD_NUMBER}
+  BUILD_TAG: ${QNAME}:${IMAGE_VERSION}
+  LATEST_TAG: ${QNAME}:latest
 
 install:
+  - echo ${BUILD_TAG}
   - echo "1. install"
 
 script:
-  - pwd
   - echo "2. build docker image"
   - echo ${BUILD_TAG}
-  - echo ${LATEST_TAG}
+  - echo LATEST_TAG
   - docker --version
   - docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
   - docker build -t ${BUILD_TAG} .
   - docker tag ${BUILD_TAG} ${LATEST_TAG}
 
 after_success:
-  - echo ".3 push docker image"
+  - echo "3. push docker image"
   - docker push ${BUILD_TAG}
   - docker push ${LATEST_TAG}
