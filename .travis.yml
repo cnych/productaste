@@ -4,12 +4,12 @@ services:
   - docker
 
 env:
-  - OWNER=cnych
-  - IMAGE_NAME=productaste
-  - QNAME=${OWNER}/${IMAGE_NAME}
-  - IMAGE_VERSION=v1.${TRAVIS_BUILD_NUMBER}
-  - BUILD_TAG=${QNAME}:${IMAGE_VERSION}
-  - LATEST_TAG=${QNAME}:latest
+  - OWNER: cnych
+  - IMAGE_NAME: productaste
+  - QNAME: ${OWNER}/${IMAGE_NAME}
+  - IMAGE_VERSION: v1.${TRAVIS_BUILD_NUMBER}
+  - BUILD_TAG: ${QNAME}:${IMAGE_VERSION}
+  - LATEST_TAG: ${QNAME}:latest
   - echo ${BUILD_TAG}
 
 before_install:
