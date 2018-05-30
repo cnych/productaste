@@ -1,33 +1,31 @@
 sudo: required  #is required to use docker service in travis
 
-language: python #can be any language, just python for example
-
 services:
-- docker
+  - docker
 
 env:
-- OWNER=cnych
-- IMAGE_NAME=productaste
-- QNAME=${OWNER}/${IMAGE_NAME}
-- IMAGE_VERSION=v1.${TRAVIS_BUILD_NUMBER}
-- BUILD_TAG=${QNAME}:${IMAGE_VERSION}
-- LATEST_TAG=${QNAME}:latest
-- echo ${BUILD_TAG}
+  - OWNER=cnych
+  - IMAGE_NAME=productaste
+  - QNAME=${OWNER}/${IMAGE_NAME}
+  - IMAGE_VERSION=v1.${TRAVIS_BUILD_NUMBER}
+  - BUILD_TAG=${QNAME}:${IMAGE_VERSION}
+  - LATEST_TAG=${QNAME}:latest
+  - echo ${BUILD_TAG}
 
 before_install:
-- echo "1. before_install"
+  - echo "1. before_install"
 
 before_script:
-- echo "2.before_script"
+  - echo "2.before_script"
 
 script:
-- echo "3. build docker image"
-- docker --version
-- docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-- docker build -t ${BUILD_TAG} .
-- docker tag ${BUILD_TAG} ${LATEST_TAG}
+  - echo "3. build docker image"
+  - docker --version
+  - docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+  - docker build -t ${BUILD_TAG} .
+  - docker tag ${BUILD_TAG} ${LATEST_TAG}
 
 after_success:
-- echo "4. push docker image"
-- docker push ${BUILD_TAG}
-- docker push ${LATEST_TAG}
+  - echo "4. push docker image"
+  - docker push ${BUILD_TAG}
+  - docker push ${LATEST_TAG}
