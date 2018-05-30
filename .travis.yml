@@ -5,5 +5,17 @@ language: python #can be any language, just python for example
 services:
 - docker
 
+install:
+- echo "1. install nothing!"
+
 script:
-- make lint build tag push
+- echo "2. build docker image"
+- docker --version
+- docker login -u "$(DOCKER_USER)" -p "$(DOCKER_PASS)"
+- docker build -t cnych/productaste:v1.$(TRAVIS_BUILD_NUMBER) .
+- docker tag cnych/productaste:v1.$(TRAVIS_BUILD_NUMBER) cnych/productaste:latest
+
+after_success:
+- echo "3. push docker image"
+- docker push cnych/productaste:v1.$(TRAVIS_BUILD_NUMBER)
+- docker push cnych/productaste:latest
