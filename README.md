@@ -1,5 +1,7 @@
 # productaste
-基于 django2.0 快速实现一个产品分享的 WEB 应用
+基于 django2.0 快速实现一个产品分享的 WEB 应用 
+
+[![Build Status](https://travis-ci.org/cnych/productaste.svg?branch=master)](https://travis-ci.org/cnych/productaste)
 
 课程地址: [https://www.haimaxy.com/course/m12jop/](https://www.haimaxy.com/course/m12jop/?utm_source=github)
 
