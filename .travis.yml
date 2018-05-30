@@ -5,17 +5,26 @@ language: python #can be any language, just python for example
 services:
 - docker
 
+env:
+- OWNER=cnych
+- IMAGE_NAME=productaste
+- QNAME=${OWNER}/${IMAGE_NAME}
+- IMAGE_VERSION=v1.${TRAVIS_BUILD_NUMBER}
+- BUILD_TAG=${QNAME}:${IMAGE_VERSION}
+- LATEST_TAG=${QNAME}:latest
+- echo ${BUILD_TAG}
+
 install:
 - echo "1. install nothing!"
 
 script:
 - echo "2. build docker image"
 - docker --version
-- docker login -u "$(DOCKER_USER)" -p "$(DOCKER_PASS)"
-- docker build -t cnych/productaste:v1.$(TRAVIS_BUILD_NUMBER) .
-- docker tag cnych/productaste:v1.$(TRAVIS_BUILD_NUMBER) cnych/productaste:latest
+- docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+- docker build -t ${BUILD_TAG} .
+- docker tag ${BUILD_TAG} ${LATEST_TAG}
 
 after_success:
 - echo "3. push docker image"
-- docker push cnych/productaste:v1.$(TRAVIS_BUILD_NUMBER)
-- docker push cnych/productaste:latest
+- docker push ${BUILD_TAG}
+- docker push ${LATEST_TAG}
