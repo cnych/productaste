@@ -5,12 +5,8 @@ services:
 
 
 env:
-  OWNER: cnych
-  IMAGE_NAME: productaste
-  QNAME: ${OWNER}/${IMAGE_NAME}
-  IMAGE_VERSION: v1.${TRAVIS_BUILD_NUMBER}
-  BUILD_TAG : ${QNAME}:${IMAGE_VERSION}
-  LATEST_TAG: ${QNAME}:latest
+  BUILD_TAG : cnych/productaste:v1.${TRAVIS_BUILD_NUMBER}
+  LATEST_TAG: cnych/productaste:latest
 
 
 # todo, test 
@@ -24,6 +20,7 @@ script:
   - docker --version
   - docker build -t ${BUILD_TAG} .
   - docker tag ${BUILD_TAG} ${LATEST_TAG}
+
 
 after_success:
   - echo "3. push docker image"
