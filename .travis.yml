@@ -19,7 +19,9 @@ before_script:
   - echo "2.before_script"
 
 script:
+  - pwd
   - echo "3. build docker image"
+  - echo ${BUILD_TAG}
   - docker --version
   - docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
   - docker build -t ${BUILD_TAG} .
