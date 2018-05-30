@@ -14,17 +14,20 @@ env:
 - LATEST_TAG=${QNAME}:latest
 - echo ${BUILD_TAG}
 
-install:
-- echo "1. install nothing!"
+before_install:
+- echo "1. before_install"
+
+before_script:
+- echo "2.before_script"
 
 script:
-- echo "2. build docker image"
+- echo "3. build docker image"
 - docker --version
 - docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
 - docker build -t ${BUILD_TAG} .
 - docker tag ${BUILD_TAG} ${LATEST_TAG}
 
 after_success:
-- echo "3. push docker image"
+- echo "4. push docker image"
 - docker push ${BUILD_TAG}
 - docker push ${LATEST_TAG}
