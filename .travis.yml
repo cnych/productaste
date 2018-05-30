@@ -18,7 +18,7 @@ install:
 script:
   - echo "2. build docker image"
   - echo ${BUILD_TAG}
-  - echo LATEST_TAG
+  - echo ${LATEST_TAG}
   - docker --version
   - docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
   - docker build -t ${BUILD_TAG} .
@@ -31,7 +31,10 @@ after_success:
 
 notifications:
   email:
-    - ych_1024@163.com
+    recipients:
+      - ych_1024@163.com
+    on_success: never # default: change
+    on_failure: always # default: always
 
 deploy:
   provider: script
