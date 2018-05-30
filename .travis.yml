@@ -1,5 +1,6 @@
-sudo: required
-language: python
+sudo: required  #is required to use docker service in travis
+
+language: python #can be any language, just python for example
 
 services:
 - docker
