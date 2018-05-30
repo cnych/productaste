@@ -1,0 +1,8 @@
+sudo: required
+language: python
+
+services:
+- docker
+
+script:
+- make lint build tag push
