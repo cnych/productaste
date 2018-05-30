@@ -13,7 +13,6 @@ env:
   LATEST_TAG: ${QNAME}:latest
 
 
-# todo, test 
 
 install:
   - echo "1. install"
