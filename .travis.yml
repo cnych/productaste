@@ -28,3 +28,14 @@ after_success:
   - echo "3. push docker image"
   - docker push ${BUILD_TAG}
   - docker push ${LATEST_TAG}
+
+notifications:
+  email:
+    - ych_1024@163.com
+
+deploy:
+  provider: script
+  script: deploy.sh
+  on:
+    all_branches: true
+    condition: $TRAVIS_BRANCH =~ ^staging|production$
