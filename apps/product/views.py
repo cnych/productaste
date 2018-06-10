@@ -1,6 +1,7 @@
 from django.urls import reverse
+from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect, \
-    HttpResponse, HttpResponseForbidden
+    HttpResponse, HttpResponseForbidden, HttpResponseNotFound
 
 from apps.product.models import Product
 from apps.product.form import ProductForm
@@ -38,3 +39,16 @@ def vote_product_view(request):
         
     except Product.DoesNotExist:
         return JsonResponse({'errcode': 404, 'message': '产品不存在'})
+    
+
+def product_detail_view(request, pid):
+    try:
+        product = Product.objects.get(pid=pid)
+        context = {
+            'product': product,
+            'vote_users': product.get_vote_users()
+        }
+        print(product.get_vote_users())
+        return render(request, 'detail.html', context)
+    except Product.DoesNotExist:
+        return HttpResponseNotFound('产品不存在')

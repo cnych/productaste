@@ -1,0 +1,62 @@
+{% load buttons %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/semantic/semantic.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/detail.css">
+</head>
+<body>
+    
+{% csrf_token %}
+<div class="ui basic segment content">
+    
+    <div class="ui centered grid container">
+        <div class="ten wide column">
+
+        <div id="products-wrapper">
+            
+            <div class="ui items products">
+                <div class="item">
+                    {% vote_button product %}
+                    <a href="/product/{{ product.pid }}" class="content">
+                        <div class="header">{{ product.name }}</div>
+                        <div class="description">{{ product.digest }}</div>
+                        <div class="ui tiny image avatar">
+                            <img src="{{ product.user.avatar }}" alt="{{ product.user.nickname }}">
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="ui items upvotes">
+                <div class="upvotes-wrapper">
+                    <p>{{ product.vote_count }}人觉得很赞：</p>
+                    <div class="upvote-users">
+                        {% for user in vote_users %}
+                        <div class="user-avatar">
+                            <img class="ui mini circular image" 
+                                src="{{ user.avatar }}" alt="{{ user.nickname }}">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        </div>
+    </div>
+    
+</div>
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/static/semantic/semantic.js"></script>
+<script src="/static/js/main.js"></script>
+
+</body>
+</html>

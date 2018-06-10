@@ -29,6 +29,13 @@ class Product(models.Model):
     def __str__(self):
         return '%s(%s)' % (self.name, self.pid)
     
+    def get_vote_users(self):
+        pvotes = ProductVote.objects.filter(product=self).order_by('-add_time')
+        vote_users = []
+        [vote_users.append(pv.user) for pv in pvotes]
+        return vote_users
+
+
     def vote(self, user):
         """用户user点赞当前产品"""
         if not ProductVote.voted(user, self):

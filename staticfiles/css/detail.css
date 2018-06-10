@@ -1,0 +1,10 @@
+.ui.items.upvotes .upvotes-wrapper, .ui.items.upvotes .upvote-users {
+    float: left;
+}
+.ui.items.upvotes .upvotes-wrapper {
+    padding: 10px;
+}
+.ui.items.upvotes .user-avatar {
+    float: left;
+    margin-right: 5px;
+}
