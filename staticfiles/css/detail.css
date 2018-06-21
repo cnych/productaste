@@ -1,3 +1,6 @@
+.ui.items.upvotes {
+    display: table;
+}
 .ui.items.upvotes .upvotes-wrapper, .ui.items.upvotes .upvote-users {
     float: left;
 }
@@ -7,4 +10,8 @@
 .ui.items.upvotes .user-avatar {
     float: left;
     margin-right: 5px;
+}
+
+#comments-wrapper {
+    margin-top: 20px;
 }

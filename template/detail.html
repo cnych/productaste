@@ -18,36 +18,105 @@
     <div class="ui centered grid container">
         <div class="ten wide column">
 
-        <div id="products-wrapper">
-            
-            <div class="ui items products">
-                <div class="item">
-                    {% vote_button product %}
-                    <a href="/product/{{ product.pid }}" class="content">
-                        <div class="header">{{ product.name }}</div>
-                        <div class="description">{{ product.digest }}</div>
-                        <div class="ui tiny image avatar">
-                            <img src="{{ product.user.avatar }}" alt="{{ product.user.nickname }}">
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="ui items upvotes">
-                <div class="upvotes-wrapper">
-                    <p>{{ product.vote_count }}人觉得很赞：</p>
-                    <div class="upvote-users">
-                        {% for user in vote_users %}
-                        <div class="user-avatar">
-                            <img class="ui mini circular image" 
-                                src="{{ user.avatar }}" alt="{{ user.nickname }}">
-                        </div>
-                        {% endfor %}
+            <div id="products-wrapper">
+                
+                <div class="ui items products">
+                    <div class="item">
+                        {% vote_button product %}
+                        <a href="/product/{{ product.pid }}" class="content">
+                            <div class="header">{{ product.name }}</div>
+                            <div class="description">{{ product.digest }}</div>
+                            <div class="ui tiny image avatar">
+                                <img src="{{ product.user.avatar }}" alt="{{ product.user.nickname }}">
+                            </div>
+                        </a>
                     </div>
                 </div>
+
+                <div class="ui items upvotes">
+                    <div class="upvotes-wrapper">
+                        <p>{{ product.vote_count }}人觉得很赞：</p>
+                        <div class="upvote-users">
+                            {% for user in vote_users %}
+                            <div class="user-avatar">
+                                <img class="ui mini circular image" 
+                                    src="{{ user.avatar }}" alt="{{ user.nickname }}">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-        </div>
+            <div id="comments-wrapper">
+                <div class="ui comments">
+                    <h3 class="ui dividing header">评论({{ comment_count }})</h3>
+                   
+                    {% if request.user.is_authenticated %}
+                    <form method="POST" action="/comment/new/" class="ui reply form">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="field">
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                        <input type="hidden" name="pid" value="{{ product.pid }}">
+                        <input type="hidden" name="rid" id="id_reply" value="0">
+                        <button type="submit" class="ui blue labeled submit icon button">
+                          <i class="icon edit"></i> 提交
+                        </button>
+                    </form>
+                    {% else %}
+                    <a  href="/auth/github/" class="ui inverted green circular button">
+                        <i class="icon github alternate"></i>
+                        登录
+                    </a>
+                    {% endif %}
+                    
+                    {% for comment in comments %}
+                    <div class="comment">
+                      <a class="avatar">
+                        <img src="{{ comment.user.avatar }}">
+                      </a>
+                      <div class="content">
+                        <a class="author">{{ comment.user.nickname }}</a>
+                        <div class="metadata">
+                          <span class="date">{{ comment.add_time }}</span>
+                        </div>
+                        <div class="text">
+                          <p>{{ comment.content |safe }}</p>
+                        </div>
+                        <div class="actions">
+                          <a class="reply" data-id="{{ comment.id }}" data-nickname="{{ comment.user.nickname }}">回复</a>
+                        </div>
+                      </div>
+                      {% for reply in comment.replies %}
+                      <div class="comments">
+                        <div class="comment">
+                          <a class="avatar">
+                            <img src="{{ reply.user.avatar }}">
+                          </a>
+                          <div class="content">
+                            <a class="author">{{ reply.user.nickname }}</a>
+                            <div class="metadata">
+                              <span class="date">{{ reply.add_time }}</span>
+                            </div>
+                            <div class="text">
+                              {{ reply.content |safe }}
+                            </div>
+                            <div class="actions">
+                                <a class="reply" data-id="{{ comment.id }}" data-nickname="{{ reply.user.nickname }}">回复</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </div>
+                    {% endfor %}
+
+                  </div>
+            </div>
 
         </div>
     </div>
@@ -57,6 +126,16 @@
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="/static/semantic/semantic.js"></script>
 <script src="/static/js/main.js"></script>
-
+<script>
+$(function() {
+    $("a.reply").bind("click", function(e) {
+        e.preventDefault();
+        console.log($(this).data("id"));
+        console.log($(this).data("nickname"));
+        $("#id_reply").val($(this).data("id"));
+        $("#id_content").val("@" + $(this).data("nickname") + ":  ");
+    });
+});
+</script>
 </body>
 </html>

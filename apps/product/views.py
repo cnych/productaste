@@ -5,6 +5,8 @@ from django.http import JsonResponse, HttpResponseRedirect, \
 
 from apps.product.models import Product
 from apps.product.form import ProductForm
+from apps.comment.form import CommentForm
+from apps.comment.models import Comment
 
 
 def new_product_view(request):
@@ -44,9 +46,14 @@ def vote_product_view(request):
 def product_detail_view(request, pid):
     try:
         product = Product.objects.get(pid=pid)
+        comments = Comment.objects.filter(is_ban=False, parent__isnull=True, product=product).order_by('-add_time')
+        comment_count = Comment.objects.filter(is_ban=False, product=product).count()
         context = {
             'product': product,
-            'vote_users': product.get_vote_users()
+            'vote_users': product.get_vote_users(),
+            'form': CommentForm,
+            'comments': comments,
+            'comment_count': comment_count
         }
         print(product.get_vote_users())
         return render(request, 'detail.html', context)

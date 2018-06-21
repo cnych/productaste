@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 
     'apps.account.django_apps.AccountConfig',
     'apps.product.django_apps.ProductConfig',
+    'apps.comment.django_apps.CommentConfig',
 ]
 
 MIDDLEWARE = [
