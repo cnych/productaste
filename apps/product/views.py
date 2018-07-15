@@ -2,6 +2,7 @@ from django.urls import reverse
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect, \
     HttpResponse, HttpResponseForbidden, HttpResponseNotFound
+from django.views.generic import View
 
 from apps.product.models import Product
 from apps.product.form import ProductForm
@@ -46,8 +47,8 @@ def vote_product_view(request):
 def product_detail_view(request, pid):
     try:
         product = Product.objects.get(pid=pid)
-        comments = Comment.objects.filter(is_ban=False, parent__isnull=True, product=product).order_by('-add_time')
-        comment_count = Comment.objects.filter(is_ban=False, product=product).count()
+        comments = Comment.objects.get_comments(product)
+        comment_count =  Comment.objects.get_comment_count(product)
         context = {
             'product': product,
             'vote_users': product.get_vote_users(),
@@ -59,3 +60,27 @@ def product_detail_view(request, pid):
         return render(request, 'detail.html', context)
     except Product.DoesNotExist:
         return HttpResponseNotFound('产品不存在')
+
+
+
+class ProductDetailView(View):
+    methods = ['get', 'post']
+
+    def get(self, request, pid):
+        try:
+            product = Product.objects.get(pid=pid)
+            comments = Comment.objects.get_comments(product)
+            comment_count =  Comment.objects.get_comment_count(product)
+            context = {
+                'product': product,
+                'vote_users': product.get_vote_users(),
+                'form': CommentForm,
+                'comments': comments,
+                'comment_count': comment_count
+            }
+            return render(request, 'detail.html', context)
+        except Product.DoesNotExist:
+            return HttpResponseNotFound('产品不存在')
+
+    def post(self, request):
+        pass

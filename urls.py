@@ -20,7 +20,7 @@ from apps.views import index_view
 from apps.account.views import login_view, logout_view, \
     auth_github_view, auth_github_callback_view
 from apps.product.views import new_product_view, \
-    vote_product_view, product_detail_view
+    vote_product_view, product_detail_view, ProductDetailView
 from apps.comment.views import new_comment_view
 
 urlpatterns = [
@@ -34,7 +34,7 @@ urlpatterns = [
 
     path('product/new/', new_product_view, name='new_product'),
     path('product/vote/', vote_product_view, name='vote_product'),
-    path('product/<pid>/', product_detail_view, name='product-detail'),
+    path('product/<pid>/', ProductDetailView.as_view(), name='product_detail'),
 
     path('comment/new/', new_comment_view, name='new_comment'),
 ]

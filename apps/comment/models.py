@@ -2,6 +2,7 @@ from django.db import models
 
 from apps.account.models import MyUser
 from apps.product.models import Product
+from apps.comment.manager import CommentManager
 
 
 class Comment(models.Model):
@@ -13,6 +14,8 @@ class Comment(models.Model):
         on_delete=models.CASCADE, verbose_name='所属评论')
     is_ban = models.BooleanField(default=False, verbose_name='禁言?')
 
+    objects = CommentManager()
+    
     class Meta:
         verbose_name = '评论管理'
         verbose_name_plural = verbose_name

@@ -1,10 +1,11 @@
+{% load static from staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/static/semantic/semantic.css">
-    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="{% static 'semantic/semantic.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 <body>
 
@@ -25,13 +26,13 @@
 
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <a href="/logout/" class="item">注销</a>
+                            <a href="{% url 'logout' %}" class="item">注销</a>
                         </div>
 
                     </div>
 
                 {% else %}
-                    <a  href="/auth/github/" class="ui inverted circular button">
+                    <a href="{% url 'auth_github' %}" class="ui inverted circular button">
                         <i class="icon github alternate"></i>
                         登录
                     </a>
@@ -97,8 +98,8 @@
 
 
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script src="/static/semantic/semantic.js"></script>
-<script src="/static/js/main.js"></script>
+<script src="{% static 'semantic/semantic.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 <script>
     $(function() {
 
