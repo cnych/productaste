@@ -61,8 +61,6 @@ def product_detail_view(request, pid):
     except Product.DoesNotExist:
         return HttpResponseNotFound('产品不存在')
 
-
-
 class ProductDetailView(View):
     methods = ['get', 'post']
 
@@ -78,6 +76,7 @@ class ProductDetailView(View):
                 'comments': comments,
                 'comment_count': comment_count
             }
+            print(product.get_vote_users())
             return render(request, 'detail.html', context)
         except Product.DoesNotExist:
             return HttpResponseNotFound('产品不存在')
